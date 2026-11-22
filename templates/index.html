@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>{{ title }}</title>
+</head>
+<body>
+<h1>{{ title }} (версия 1.0)</h1>
+<p>Запрос обработал контейнер: {{ host }}</p>
+
+<h2>Добавить запись</h2>
+<form method="post" action="/add" enctype="multipart/form-data">
+<p>Название: <input name="title" required></p>
+<p>Описание: <input name="description" size="60"></p>
+<p>Файл: <input type="file" name="file"></p>
+<p><button type="submit">Добавить</button></p>
+</form>
+
+<h2>Записи ({{ items|length }})</h2>
+<table border="1" cellpadding="6">
+<tr><th>Название</th><th>Описание</th><th>Дата (UTC)</th><th>Файл</th></tr>
+{% for i in items %}
+<tr>
+<td>{{ i.title }}</td>
+<td>{{ i.description }}</td>
+<td>{{ i.created_at }}</td>
+<td>{% if i.file_url %}<a href="{{ i.file_url }}">{{ i.file_name }}</a>{% else %}—{% endif %}</td>
+</tr>
+{% endfor %}
+</table>
+</body>
+</html>
